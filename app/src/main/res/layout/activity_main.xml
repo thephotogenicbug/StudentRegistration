@@ -14,7 +14,6 @@
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:textSize="24sp"
         android:hint="@string/student_name"
         android:inputType="textPersonName" />
@@ -23,10 +22,9 @@
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="@string/student_email"
         android:textSize="24sp"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonEmail"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Save"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnClear"
@@ -47,8 +46,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Clear"
-            android:layout_marginLeft="30dp"
-            android:textSize="20sp" />
+            android:layout_marginStart="30dp"
+            android:textSize="20sp"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStudent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
 </LinearLayout>
