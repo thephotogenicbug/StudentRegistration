@@ -22,6 +22,12 @@ class MainActivity : AppCompatActivity() {
   private lateinit var studentRecyclerView: RecyclerView
   private lateinit var adapter: StudentRecyclerViewAdaptor
 
+  private var isListItemClicked = false
+
+  // Delete var
+  private lateinit var selectedStudent:Student
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +44,22 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory).get(StudentViewModel::class.java)
 
         saveButton.setOnClickListener {
-            saveStudentData()
-            clearInput()
+            if(isListItemClicked){
+                updateStudentData()
+                clearInput()
+            }else {
+                saveStudentData()
+                clearInput()
+            }
         }
 
         clearButton.setOnClickListener {
-            clearInput()
+            if(isListItemClicked){
+                deleteStudentData()
+                clearInput()
+            }else {
+                clearInput()
+            }
         }
         initRecyclerView()
     }
@@ -62,6 +78,32 @@ class MainActivity : AppCompatActivity() {
 
             )
         )
+    }
+
+    private fun updateStudentData(){
+        viewModel.updateStudent(
+            Student(
+                selectedStudent.id,
+                nameEditText.text.toString(),
+                emailEditText.text.toString()
+            )
+        )
+        saveButton.text = "Save"
+        clearButton.text = "Clear"
+        isListItemClicked = false
+    }
+
+    private fun deleteStudentData(){
+        viewModel.deleteStudent(
+            Student(
+                selectedStudent.id,
+                nameEditText.text.toString(),
+                emailEditText.text.toString()
+            )
+        )
+        saveButton.text = "Save"
+        clearButton.text = "Clear"
+        isListItemClicked = false
     }
 
     private fun clearInput(){
@@ -87,10 +129,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun listItemClicked(student: Student){
-        Toast.makeText(
-            this,
-            "Student name is ${student.name}",
-            Toast.LENGTH_LONG
-        ).show()
+
+//        Toast.makeText(
+//            this,
+//            "Student name is ${student.name}",
+//            Toast.LENGTH_LONG
+//        ).show()
+         selectedStudent = student
+        saveButton.text = "Update"
+        clearButton.text = "Delete"
+        isListItemClicked = true
+        nameEditText.setText(selectedStudent.name)
+        emailEditText.setText(selectedStudent.email)
     }
 }
